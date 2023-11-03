@@ -25,9 +25,8 @@ const Histogram = () => {
 
     // Function to fetch and regenerate data
     const regenerateData = () => {
-        // You can make an API request here to fetch new data or generate random data
-        // For the sake of this example, we'll generate random data
-        const randomData = Array.from({ length: 20 }, () => Math.floor(Math.random() * 100));
+        // generate random data
+        const randomData = Array.from({ length: 100 }, () => Math.floor(Math.random() * 100));
         setData(randomData);
         setDataGenerated(true);
     };
@@ -39,7 +38,7 @@ const Histogram = () => {
     const numBins = 10; // Adjust as needed
 
     // Calculate bin width and set up bins
-    const binWidth = dataGenerated ? 100 / numBins : 0;
+    const binWidth = dataGenerated ? 400 / numBins : 0;
     const bins = Array.from({ length: numBins }, (_, i) => ({
         start: dataGenerated ? i * binWidth : 0,
         end: dataGenerated ? (i + 1) * binWidth : 0,
@@ -58,8 +57,8 @@ const Histogram = () => {
     const maxCount = Math.max(...bins.map((bin) => bin.count));
 
     return (
-        <div className="flex mt-32 flex-col items-center h-screen">
-            <div className="max-w-full bg-white rounded-lg shadow p-4 md:p-6 relative">
+        <div className="flex mt-32 flex-col items-center ">
+            <div className="max-w-full bg-white rounded-lg shadow-2xl mt-24 p-4 md:p-6 relative">
                 <div className="pb-4 mb-4">
                     <div className="grid grid-cols-10 gap-2">
                         {bins.map((bin, index) => (
@@ -68,14 +67,14 @@ const Histogram = () => {
                                 className="relative mt-16"
                             >
                                 <div
-                                    className="absolute bottom-0 left-0 right-0 cursor-pointer"
+                                    className="absolute bottom-0 left-0 right-0 rounded cursor-pointer"
                                     style={{
-                                        height: `${20 + (bin.count / maxCount) * (100 - 20)}px`, // Update this line
+                                        height: `${45 + (bin.count / maxCount) * (100 - 45)}px`, 
                                         minHeight: '0px',
                                         background: hoveredBar === index ? 'rgba(255, 99, 132, 0.5)' : 'rgba(53, 162, 235, 0.5)',
                                     }}
                                     onMouseEnter={() => setHoveredBar(index)}
-                                    onMouseLeave={() => setHoveredBar(null)}
+                                    onMouseLeave={() => setHoveredBar(index)}
                                 >
                                     
                                     {hoveredBar === index && (
@@ -116,7 +115,7 @@ const Histogram = () => {
                     </div>
                 </div>
             </div>
-            <div className="text-center mt-16">
+            <div className="text-center mt-24">
                 <button
                     onClick={regenerateData}
                     className="bg-blue-500 text-white px-4 py-2 rounded hover-bg-blue-600"
